@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {useState} from 'react';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+function App(){
+  const [username,setUsername] = useState('');
+  const[password,setPassword] = useState('');
+  
+  const [submit,setSubmit] = useState(false);
+  const [error,seError] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if(username  === 'user' && password === 'password'){
+      setSubmit(true)
+    }
+    else{
+      seError(true)
+    }
+  }
+
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <h1>Login Page</h1>
+      {error ? ( <h3>Invalid username or password</h3>) : null}
+
+      {submit ? (
+        <h2>Welcome, user!</h2>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <div className='formInput'>
+              <label> Username : </label>
+              <input 
+                placeholder='Username'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div className='formInput'>
+              <label>Password :  </label>
+              <input 
+                placeholder='Password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type='submit'>
+              Submit
+            </button>
+          </div>
+        </form>
+      )}
+    </div>
   )
 }
 
-export default App
+
+export default App;
